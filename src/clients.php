@@ -9,11 +9,11 @@ class Clients {
     private $email;
     private $phone;
     private $title;
+    private $creationDate;
     private $dateOfFirstContact;
+    private $flatId;
     private $sellerId;
     private $specificInformationId;
-    private $flatId;
-    private $buildingId;
 
     public function __construct() {
         $this->id = -1;
@@ -23,14 +23,12 @@ class Clients {
         $this->email = "";
         $this->phone = "";
         $this->title = "";
+        $this->creationDate = "";
         $this->dateOfFirstContact = "";
+        $this->flatId = "";
         $this->sellerId = "";
         $this->specificInformationId = "";
-        $this->flatId = "";
-        $this->buildingId = "";
     }
-
-    
 
     function getId() {
         return $this->id;
@@ -120,12 +118,38 @@ class Clients {
         $this->specificInformationId = $specificInformationId;
     }
 
-    function getBuildingId() {
-        return $this->buildingId;
+    function getCreationDate() {
+        return $this->creationDate;
     }
 
-    function setBuildingId($buildingId) {
-        $this->buildingId = $buildingId;
+    function setCreationDate($creationDate) {
+        $this->creationDate = $creationDate;
     }
-    // LOAD LIST OF ALL CLIENTS //
+
+    // LOAD CLIENT BY ID //
+
+    static public function loadClientsId(mysqli $connection, $id) {
+        $db = "SELECT * FROM clients WHERE id=$id";
+        $result = $connection->query($db);
+        if ($result && $result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+            $loadClient = new Clients();
+            $loadClient->id = $row['id'];
+            $loadClient->name = $row['name'];
+            $loadClient->secondName = $row['second_name'];
+            $loadClient->lastName = $row['last_name'];
+            $loadClient->email = $row['email'];
+            $loadClient->phone = $row['phone'];
+            $loadClient->title = $row['title'];
+            $loadClient->creationDate = $row['creation_date'];
+            $loadClient->dateOfFirstContact = $row['date_of_first_contact'];
+            $loadClient->flatId = $row['flat_id'];
+            $loadClient->sellerId = $row['seller_id'];
+            $loadClient->specificInformationId = $row['specific_information_id'];
+            return $loadClient;
+        }
+    }
+
+
+
 }

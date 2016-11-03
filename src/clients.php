@@ -150,6 +150,62 @@ class Clients {
         }
     }
 
+    //LOAD ALL CLIENTS FROM DB
+    static public function loadAllClients(mysqli $connection) {
+        $db = "SELECT * FROM clients ORDER BY creation_date DESC";
+        $result = $connection->query($db);
 
+        $allClients = [];
+        if ($result && $result->num_rows != 0) {
+            foreach ($result as $row) {
+                $loadClients = new Clients();
+                $loadClients->id = $row['id'];
+                $loadClients->name = $row['name'];
+                $loadClients->secondName = $row['second_name'];
+                $loadClients->lastName = $row['last_name'];
+                $loadClients->email = $row['email'];
+                $loadClients->phone = $row['phone'];
+                $loadClients->title = $row['title'];
+                $loadClients->creationDate = $row['creation_date'];
+                $loadClients->dateOfFirstContact = $row['date_of_first_contact'];
+                $loadClients->flatId = $row['flat_id'];
+                $loadClients->sellerId = $row['seller_id'];
+                $loadClients->specificInformationId = $row['specific_information_id'];
+                $allClients[] = $loadClients;
+            }
+        }
+
+        return $allClients;
+    }
+
+    // LOAD ALL CLIENTS FROM DB SELECTED BY FLAT ID//
+
+    static public function loadAllClientsByFlatId(mysqli $connection, $flatId) {
+
+        $db = "SELECT * FROM clients WHERE flat_id = $flatId ORDER BY creation_date DESC";
+        $result = $connection->query($db);
+
+        $allClients = [];
+        if ($result && $result->num_rows != 0) {
+            foreach ($result as $row) {
+                $loadClients = new Clients();
+                $loadClients->id = $row['id'];
+                $loadClients->name = $row['name'];
+                $loadClients->secondName = $row['second_name'];
+                $loadClients->lastName = $row['last_name'];
+                $loadClients->email = $row['email'];
+                $loadClients->phone = $row['phone'];
+                $loadClients->title = $row['title'];
+                $loadClients->creationDate = $row['creation_date'];
+                $loadClients->dateOfFirstContact = $row['date_of_first_contact'];
+                $loadClients->flatId = $row['flat_id'];
+                $loadClients->sellerId = $row['seller_id'];
+                $loadClients->specificInformationId = $row['specific_information_id'];
+                $allClients[] = $loadClients;
+            }
+        }
+
+        return $allClients;
+    }
 
 }

@@ -208,4 +208,69 @@ class Clients {
         return $allClients;
     }
 
+    // ADD CLIENT TO DB //
+
+    public function saveToDB(mysqli $connection) {
+
+        if ($this->id == -1) {
+            $db = "INSERT INTO clients(name, second_name, last_name, email, "
+                    . "phone, title, creation_date, date_of_first_contact, "
+                    . "flat_id, seller_id, specific_information_id) VALUES "
+                    . "('$this->name', '$this->secondName', '$this->lastName', "
+                    . "'$this->email', '$this->phone', '$this->title', "
+                    . "'$this->creationDate', '$this->dateOfFirstContact',"
+                    . "'$this->flatId', '$this->sellerId', '$this-> specificInformationId')";
+            $result = $connection->query($db);
+            if ($result) {
+                $this->id = $connection->insert_id;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //EDIT CLIENT //
+
+    public function editClient(mysqli $connection) {
+
+        if ($this->id == -1) {
+            $db = "UPDATE clients SET user_id=$this->username, text=$this->text, "
+                    . "creation_date=$this->creationDate WHERE id=$this->id";
+            $db = "UPDATE clients SET "
+                    . "name=$this->name, "
+                    . "second_name=$this->secondName, "
+                    . "last_name=$this->lastName, "
+                    . "email=$this->email, "
+                    . "phone=$this->phone, "
+                    . "title=$this->title, "
+                    . "creation_date=$this->creationDate, "
+                    . "date_of_first_contact=$this->dateOfFirstContact, "
+                    . "flat_id=$this->flatId, "
+                    . "seller_id=$this->sellerId, "
+                    . "specific_information_id=$this->specificInformationId "
+                    . "WHERE id=$this->id";
+            $result = $connection->query($db);
+
+            if ($result == true) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    // DELETE CLIENT FROM DB //
+
+    public function deleteClient(mysqli $connection) {
+        if ($this->id != -1) {
+            $db = "DELETE FROM clients WHERE id=$this->id";
+            $result = $connection->query($db);
+            if ($result == true) {
+                $this->id = -1;
+                return true;
+            }
+            return false;
+        }
+        return true;
+    }
+
 }

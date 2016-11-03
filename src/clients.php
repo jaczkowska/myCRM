@@ -10,9 +10,10 @@ class Clients {
     private $phone;
     private $title;
     private $dateOfFirstContact;
-    private $flatId;
     private $sellerId;
     private $specificInformationId;
+    private $flatId;
+    private $buildingId;
 
     public function __construct() {
         $this->id = -1;
@@ -23,8 +24,13 @@ class Clients {
         $this->phone = "";
         $this->title = "";
         $this->dateOfFirstContact = "";
-        
+        $this->sellerId = "";
+        $this->specificInformationId = "";
+        $this->flatId = "";
+        $this->buildingId = "";
     }
+
+    
 
     function getId() {
         return $this->id;
@@ -114,9 +120,12 @@ class Clients {
         $this->specificInformationId = $specificInformationId;
     }
 
-    
-    // SHOW LIST OF ALL CLIENTS //
-    
-    
-    
+    function getBuildingId() {
+        return $this->buildingId;
+    }
+
+    function setBuildingId($buildingId) {
+        $this->buildingId = $buildingId;
+    }
+    // LOAD LIST OF ALL CLIENTS //
 }
